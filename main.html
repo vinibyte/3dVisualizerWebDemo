@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title> Design</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/interact.js/1.2.6/interact.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenLite.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/plugins/CSSPlugin.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/easing/EasePack.min.js"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/102/three.js'></script>
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
+  <script src="Scripts/three.min.js"></script>
+  <script src="Scripts/GLTFLoader.js"></script>
+  <script src="Scripts/GLTFExporter.js"></script>
+  <script src="Scripts/DragControls.js"></script>
+  <script src="Scripts/OrbitControls.js"></script>
+  <link rel="stylesheet" href="./mainstyle.css">
+</head>
+
+<body style=" overflow: hidden;">
+
+  <div class="mainX">
+    <div id="canvasX" class="canvasX">
+      <canvas id="canvas" class="webgl"></canvas>
+    </div>
+    <div class="interactionX">
+      <div class="container">
+        <div class="row">
+          <div class="tabbable">
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#tab1" style="color: #333" data-toggle="tab">Editor</a></li>
+              <li><a href="#tab2" style="color: #333" data-toggle="tab">Assets</a></li>
+              <li><a href="#tab3" style="color: #333" data-toggle="tab">Render</a></li>
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane active" id="tab1" style="padding-left: 100px;">
+                <h4 id="assetName" style="margin-left: 10px; font-size: 32px;">Current Asset: Sofa</h4>
+                <button style="cursor: pointer; font-size: 32px;" id="scaleButtonDown">-</button> Scale <button
+                  style="cursor: pointer; font-size: 32px;" id="scaleButtonUp">+</button>
+                <br>
+                <button><input type="range" id="assetRotate" min="-360" max="360" value="0"
+                    style="width: 250px;">Rotate</button>
+                <br>
+                Draggable Object:&emsp;<input type="checkbox" id="myDrag" checked=true><br>
+                Lock Camera: &emsp;&emsp;<input type="checkbox" id="lockCamera"><br>
+                Lock X Drag:&emsp;&emsp;&emsp;<input type="checkbox" id="lockDragX"><br>
+                Lock Y Drag:&emsp;&emsp;&emsp;<input type="checkbox" id="lockDragY"><br>
+                Lock Z Drag:&emsp;&emsp;&emsp;<input type="checkbox" id="lockDragZ"><br>
+                Show Wireframe: &emsp;<input type="checkbox" id="myWire">
+                <br>
+                <button id="buttonCenter" style="margin-left: 10px;">Center</button>
+                <button id="buttonDelete" style="margin-left: 10px;">Delete</button>
+              </div>
+              <div class="tab-pane" id="tab2">
+                <br>
+                <div class="buttons">
+                  <button id="button2">Another Sofa</button>
+                  <button id="button3">Add Bed</button>
+                  <button id="button4">Add Assets</button>
+                </div>
+                <form>
+                  <label for="myAsset"
+                    style="margin-left: 10px; font-size: 24px; width:400px; background: #ddd; border: none;">Add new
+                    Asset: (under work)</label>
+                  <input list="chooseAssets" id="myAsset" name="myAsset" placeholder="Type here..."
+                    style="margin-left: 10px; font-size: 24px; width:400px;" />
+                  <datalist id="chooseAssets">
+                    <option value="Sofa">
+                    <option value="Television">
+                    <option value="Attic">
+                    <option value="Lamps">
+                    <option value="Table">
+                    <option value="Bed">
+                    <option value="Chair">
+                  </datalist>
+                </form>
+              </div>
+              <div class="tab-pane" id="tab3">
+                <br>
+                <h3>. Choose Wallpaper:</h3>
+                <form>
+                  <ul>
+                    <li><input type="radio" name="wallpaper" id="cb_modern" />
+                      <label for="cb_modern"><img src="Resources/wallpaper_modern.jpg" /></label>
+                    </li>
+                    <li><input type="radio" name="wallpaper" id="cb_wrap" />
+                      <label for="cb_wrap"><img src="Resources/wallpaper_wrap.jpg" /></label>
+                    </li>
+                    <li><input type="radio" name="wallpaper" checked="default" id="cb_matte" />
+                      <label for="cb_matte"><img src="Resources/wallpaper_matte.jpg" /></label>
+                    </li>
+                    <li><input type="radio" name="wallpaper" id="cb_default" />
+                      <label for="cb_default"><img src="Resources/wallpaper_default.jpg" /></label>
+                    </li>
+                    <li><input type="radio" name="wallpaper" id="cb_ancient" />
+                      <label for="cb_ancient"><img src="Resources/wallpaper_ancient.jpg" /></label>
+                    </li>
+                  </ul>
+                </form>
+                <h3>. Choose Floor:</h3>
+                <form>
+                  <ul>
+                    <li><input type="radio" name="floorselect" id="cb_floor1" />
+                      <label for="cb_floor1"><img src="Resources/floor1.jpg" /></label>
+                    </li>
+                    <li><input type="radio" name="floorselect" id="cb_floor2" />
+                      <label for="cb_floor2"><img src="Resources/floor2.jpg" /></label>
+                    </li>
+                    <li><input type="radio" name="floorselect" checked="default" id="cb_floor3" />
+                      <label for="cb_floor3"><img src="Resources/floor3.jpg" /></label>
+                    </li>
+                    <li><input type="radio" name="floorselect" id="cb_floor4" />
+                      <label for="cb_floor4"><img src="Resources/floor4.jpg" /></label>
+                    </li>
+                    <li><input type="radio" name="floorselect" id="cb_floor5" />
+                      <label for="cb_floor5"><img src="Resources/floor5.jpg" /></label>
+                    </li>
+                  </ul>
+                </form>
+                <br>
+                <br>
+                <div class="buttons">
+                  <button id="shot">Screenshot</button>
+                  <button id="button5">Change Floors</button>
+                  <button id="button1">Sofa Texture</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" style="display: none;">
+    <div class="block">
+    </div>
+    <div class="buttonsX">
+      <div id="joystick">
+        <div class="draggable" id="knob"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.4/TweenMax.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
+  <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+  <script src="main.js" type="module"></script>
+  <script>
+    $(function () {
+      var hash = window.location.hash;
+      hash && $('ul.nav a[href="' + hash + '"]').tab('show');
+
+      $('.nav-tabs a').click(function (e) {
+        $(this).tab('show');
+        var scrollmem = $('body').scrollTop();
+        window.location.hash = this.hash;
+        $('html,body').scrollTop(scrollmem);
+      });
+    });
+  </script>
+</body>
+
+</html>
