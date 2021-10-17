@@ -16,70 +16,76 @@
   <script src="Scripts/GLTFLoader.js"></script>
   <script src="Scripts/GLTFExporter.js"></script>
   <script src="Scripts/DragControls.js"></script>
+  <script src="Scripts/TransformControls.js"></script>
   <script src="Scripts/OrbitControls.js"></script>
   <link rel="stylesheet" href="./mainstyle.css">
 </head>
 
 <body style=" overflow: hidden;">
-
   <div class="mainX">
-    <div id="canvasX" class="canvasX">
-      <canvas id="canvas" class="webgl"></canvas>
-    </div>
     <div class="interactionX">
       <div class="container">
         <div class="row">
           <div class="tabbable">
             <ul class="nav nav-tabs">
-              <li class="active"><a href="#tab1" style="color: #333" data-toggle="tab">Editor</a></li>
-              <li><a href="#tab2" style="color: #333" data-toggle="tab">Assets</a></li>
-              <li><a href="#tab3" style="color: #333" data-toggle="tab">Render</a></li>
+              <li class="active"><a href="#tab1"
+                  style="background: #333; color: #fff; border: 1px black; font-family: 'Bahnschrift'; font-size: 24px; margin-left: 20px;"
+                  data-toggle="tab">&emsp;EDITOR&emsp;</a></li>
+              <li><a href="#tab2"
+                  style="background: #333; color: #fff; border: 1px black; font-family: 'Bahnschrift'; font-size: 24px;"
+                  data-toggle="tab">&emsp;ASSETS&emsp;</a></li>
+              <li><a href="#tab3"
+                  style="background: #333; color: #fff; border: 1px black; font-family: 'Bahnschrift'; font-size: 24px;"
+                  data-toggle="tab">&emsp;RENDER&emsp;</a></li>
             </ul>
             <div class="tab-content">
-              <div class="tab-pane active" id="tab1" style="padding-left: 100px;">
-                <h4 id="assetName" style="margin-left: 10px; font-size: 32px;">Current Asset: Sofa</h4>
+              <div class="tab-pane active" id="tab1" style="padding-left: 25px; background: #fff">
+                <br>
+                <h4 id="assetName" style=" font-size: 24px;">Current Asset: Sofa</h4>
                 <button style="cursor: pointer; font-size: 32px;" id="scaleButtonDown">-</button> Scale <button
-                  style="cursor: pointer; font-size: 32px;" id="scaleButtonUp">+</button>
-                <br>
+                  style="cursor: pointer; font-size: 32px; margin-right: 10px;" id="scaleButtonUp">+</button>
                 <button><input type="range" id="assetRotate" min="-360" max="360" value="0"
-                    style="width: 250px;">Rotate</button>
+                    style="width: 200px; margin: 15px"></button>
                 <br>
-                Draggable Object:&emsp;<input type="checkbox" id="myDrag" checked=true><br>
-                Lock Camera: &emsp;&emsp;<input type="checkbox" id="lockCamera"><br>
-                Lock X Drag:&emsp;&emsp;&emsp;<input type="checkbox" id="lockDragX"><br>
-                Lock Y Drag:&emsp;&emsp;&emsp;<input type="checkbox" id="lockDragY"><br>
-                Lock Z Drag:&emsp;&emsp;&emsp;<input type="checkbox" id="lockDragZ"><br>
-                Show Wireframe: &emsp;<input type="checkbox" id="myWire">
-                <br>
-                <button id="buttonCenter" style="margin-left: 10px;">Center</button>
+                <button id="buttonCenter" style="margin-right: 10px;">Center</button>
                 <button id="buttonDelete" style="margin-left: 10px;">Delete</button>
+                <br>
+                <h4 style=" font-size: 24px;">Other Options:</h4>
+                 Draggable Object:&emsp;<input type="checkbox" id="myDrag" checked=true><br>
+                 Lock Camera:&emsp;&emsp;&emsp;<input type="checkbox" id="lockCamera"><br>
+                 Lock X Drag :&emsp;&emsp;&emsp;<input type="checkbox" id="lockDragX"><br>
+                 Lock Y Drag :&emsp;&emsp;&emsp;<input type="checkbox" id="lockDragY"><br>
+                 Lock Z Drag :&emsp;&emsp;&emsp;<input type="checkbox" id="lockDragZ"><br>
+                 Show Wireframe: &emsp;<input type="checkbox" id="myWire"><br>
+                 Show Transform: &emsp;<input type="checkbox" id="myTransformer">
+                <br>
+                <br>
+                <div id="enableinfo">Select Show transform for Advanced Controls.</div>
+                <div id="info" style="font-size: large; display: none;">
+                  "W" translate | "E" scale | "R" rotate | "+/-" adjust size | <br>
+                  "Q" toggle world/local space | "Shift" snap | "C" toggle camera<br>
+                  "X" toggle X | "Y" toggle Y | "Z" toggle Z | "V" random zoom <br>
+                </div>
               </div>
               <div class="tab-pane" id="tab2">
                 <br>
-                <div class="buttons">
-                  <button id="button2">Another Sofa</button>
-                  <button id="button3">Add Bed</button>
-                  <button id="button4">Add Assets</button>
-                </div>
-                <form>
-                  <label for="myAsset"
-                    style="margin-left: 10px; font-size: 24px; width:400px; background: #ddd; border: none;">Add new
-                    Asset: (under work)</label>
+                <h4 style="margin-left: 10px; font-size: 32px;">Asset Management:</h4>
+                <h3 id="assetCount" style="margin-left: 10px;">Total Assets: 0</h3>
+                <h3>. Add a new Asset:</h3>
+                <div style="display: flex">
                   <input list="chooseAssets" id="myAsset" name="myAsset" placeholder="Type here..."
-                    style="margin-left: 10px; font-size: 24px; width:400px;" />
-                  <datalist id="chooseAssets">
-                    <option value="Sofa">
-                    <option value="Television">
-                    <option value="Attic">
-                    <option value="Lamps">
-                    <option value="Table">
-                    <option value="Bed">
-                    <option value="Chair">
-                  </datalist>
-                </form>
+                    style="margin: 10px; font-size: 24px; width:300px; background: #fff;" />
+                  <datalist id="chooseAssets"></datalist>
+                  <button id="buttonAddAsset"
+                    style="margin: 10px; padding: 0px; border-radius: 10px;">&emsp;Add&emsp;</button>
+                </div>
+                <div class="buttons">
+                </div>
+                <button id="buttonDeleteAll" style="margin-left: 150px;">Delete All Assets</button>
+                <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+                <br>
               </div>
               <div class="tab-pane" id="tab3">
-                <br>
                 <h3>. Choose Wallpaper:</h3>
                 <form>
                   <ul>
@@ -89,11 +95,11 @@
                     <li><input type="radio" name="wallpaper" id="cb_wrap" />
                       <label for="cb_wrap"><img src="Resources/wallpaper_wrap.jpg" /></label>
                     </li>
-                    <li><input type="radio" name="wallpaper" checked="default" id="cb_matte" />
-                      <label for="cb_matte"><img src="Resources/wallpaper_matte.jpg" /></label>
-                    </li>
-                    <li><input type="radio" name="wallpaper" id="cb_default" />
+                    <li><input type="radio" name="wallpaper" checked="default" id="cb_default" />
                       <label for="cb_default"><img src="Resources/wallpaper_default.jpg" /></label>
+                    </li>
+                    <li><input type="radio" name="wallpaper" id="cb_matte" />
+                      <label for="cb_matte"><img src="Resources/wallpaper_matte.jpg" /></label>
                     </li>
                     <li><input type="radio" name="wallpaper" id="cb_ancient" />
                       <label for="cb_ancient"><img src="Resources/wallpaper_ancient.jpg" /></label>
@@ -109,7 +115,7 @@
                     <li><input type="radio" name="floorselect" id="cb_floor2" />
                       <label for="cb_floor2"><img src="Resources/floor2.jpg" /></label>
                     </li>
-                    <li><input type="radio" name="floorselect" checked="default" id="cb_floor3" />
+                    <li><input type="radio" name="floorselect" id="cb_floor3" checked="default" />
                       <label for="cb_floor3"><img src="Resources/floor3.jpg" /></label>
                     </li>
                     <li><input type="radio" name="floorselect" id="cb_floor4" />
@@ -120,12 +126,47 @@
                     </li>
                   </ul>
                 </form>
-                <br>
-                <br>
+                <h3>. Choose Asset Texture:</h3>
+                <form>
+                  <ul>
+                    <li><input type="radio" name="assetTextureselect" id="cb_assetTexture1" />
+                      <label for="cb_assetTexture1"><img src="Resources/assetTexture1.jpg" /></label>
+                    </li>
+                    <li><input type="radio" name="assetTextureselect" id="cb_assetTexture2" />
+                      <label for="cb_assetTexture2"><img src="Resources/assetTexture2.jpg" /></label>
+                    </li>
+                    <li><input type="radio" name="assetTextureselect" id="cb_assetTexture3" />
+                      <label for="cb_assetTexture3"><img src="Resources/assetTexture3.jpg" /></label>
+                    </li>
+                    <li><input type="radio" name="assetTextureselect" id="cb_assetTexture4" />
+                      <label for="cb_assetTexture4"><img src="Resources/assetTexture4.jpg" /></label>
+                    </li>
+                    <li><input type="radio" name="assetTextureselect" id="cb_assetTexture5" />
+                      <label for="cb_assetTexture5"><img src="Resources/assetTexture5.jpg" /></label>
+                    </li>
+                  </ul>
+                  <ul>
+                    <li><input type="radio" name="assetTextureselect" id="cb_assetTexture6" />
+                      <label for="cb_assetTexture6"><img src="Resources/assetTexture6.jpg" /></label>
+                    </li>
+                    <li><input type="radio" name="assetTextureselect" id="cb_assetTexture7" />
+                      <label for="cb_assetTexture7"><img src="Resources/assetTexture7.jpg" /></label>
+                    </li>
+                    <li><input type="radio" name="assetTextureselect" id="cb_assetTexture8" />
+                      <label for="cb_assetTexture8"><img src="Resources/assetTexture8.jpg" /></label>
+                    </li>
+                    <li><input type="radio" name="assetTextureselect" id="cb_assetTexture9" />
+                      <label for="cb_assetTexture9"><img src="Resources/assetTexture9.jpg" /></label>
+                    </li>
+                    <li><input type="radio" name="assetTextureselect" id="cb_assetTexture10" />
+                      <label for="cb_assetTexture10"><img src="Resources/assetTexture10.jpg" /></label>
+                    </li>
+                  </ul>
+                </form>
                 <div class="buttons">
                   <button id="shot">Screenshot</button>
-                  <button id="button5">Change Floors</button>
-                  <button id="button1">Sofa Texture</button>
+                  <button id="button5">Download</button>
+                  <button id="buttonResetScene">Reset Scene</button>
                 </div>
               </div>
             </div>
@@ -133,17 +174,11 @@
         </div>
       </div>
     </div>
+    <div id="canvasX" class="canvasX">
+      <canvas id="canvas" class="webgl" style="border: 2px solid black;"></canvas>
+    </div>
   </div>
 
-  <div class="panel" style="display: none;">
-    <div class="block">
-    </div>
-    <div class="buttonsX">
-      <div id="joystick">
-        <div class="draggable" id="knob"></div>
-      </div>
-    </div>
-  </div>
 
 
   <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.4/TweenMax.min.js'></script>

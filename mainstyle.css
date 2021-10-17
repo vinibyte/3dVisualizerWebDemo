@@ -3,10 +3,13 @@
     padding: 0;
 	margin: 0;
 	color: #333;
+    background-color: #fff;
 }
 button {
-    background-color: #fff;
+    background-color: #333;
+	color: #fff;
     font-family: "Bahnschrift";
+	font-weight: 300;
     font-size: 24px;
     margin: 10px;
     padding: 6px 10px 3px 10px;
@@ -41,17 +44,16 @@ button {
 
 .mainX{
 	display: flex;	
-	justify-content: center;
+	justify-content: space-between;
 }
 .interactionX{
-	background-color: #ddd;
+	background-color: #fff;
 	margin: 5px;
-	width: 30%;
+	width: 25%;
 }
 .nav{
 	border-bottom: 0px;
 	justify-content: center;
-
 }
 .nav-tabs{
 	color: #333;
@@ -73,18 +75,13 @@ body, input {
 	color: var(--fg);
 	font: 1em/1.5 Helvetica, sans-serif;
 }
-body {
-	background-color: var(--bg);
-	background-image: linear-gradient(90deg,#0000003f,transparent);
-	height: 100vh;
-}
 form {
 	margin-top: 10px;
 	max-width: 25em;
 	padding: 0 1.5em;
 	display: flex;
 }
-
+  
 .range {
 	-webkit-appearance: none;
 	-moz-appearance: none;
@@ -96,36 +93,7 @@ form {
 	background-color: #217;
 	transform: translate(-50%, -50%);
   }
-  
-#joystick {
-	width: 120px;
-	height: 120px;
-	background: #333333;
-	margin: 10px auto;
-	position: relative;
-	border-radius: 8px;
-}
-#knob {
-	cursor: move;
-	border-radius: 100%;
-	width: 30px;
-	height: 30px;
-	position: relative;
-	-webkit-box-shadow: 0px 10px 20px 0px rgba(0,0,0,0.75);
-	-moz-box-shadow: 0px 10px 20px 0px rgba(0,0,0,0.75);
-	box-shadow: 0px 10px 20px 0px rgba(0,0,0,0.75);
-	background: #ff0000;
-	background: -moz-radial-gradient(center, ellipse cover,  #ff0000 0%, #a02020 100%); 
-	background: -webkit-radial-gradient(center, ellipse cover,  #ff0000 0%,#a02020 100%);
-	background: radial-gradient(ellipse at center,  #ff0000 0%,#a02020 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff0000', endColorstr='#a02020',GradientType=1 );
-}
-#console {
-	display: none;
-	color: #ffffff;
-	text-align: center;
-	font-family: 'Open Sans', sans-serif;
-}
+
 
 ul {
 	list-style-type: none;
@@ -177,6 +145,7 @@ ul {
   
   :checked + label:before {
 	content: "✓";
+	display:none;
 	background-color: grey;
 	transform: scale(1);
   }
