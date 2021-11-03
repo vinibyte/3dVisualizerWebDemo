@@ -2,7 +2,7 @@ const canvas = document.querySelector('canvas.webgl')
 const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true })
 const loader = new THREE.GLTFLoader();
 const scene = new THREE.Scene()
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / 1.4/ window.innerHeight / 1.05, 1, 100000)
+const camera = new THREE.PerspectiveCamera(90, window.innerWidth / 1.4 / window.innerHeight / 1.05, 1, 100000)
 renderer.setSize(window.innerWidth / 1.4, window.innerHeight / 1.05)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 renderer.shadowMap.enabled = true;
@@ -10,7 +10,7 @@ renderer.shadowMapSoft = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 camera.position.x = 0
 camera.position.y = 350
-camera.position.z = 300
+camera.position.z = 600
 scene.add(camera)
 const controls = new THREE.OrbitControls(camera, canvas)
 const transformControl = new THREE.TransformControls(camera, renderer.domElement);
@@ -33,12 +33,25 @@ targetObject.position.set(-1500, 0, 1000);
 scene.add(targetObject);
 directionalLight.target = targetObject;
 pointLight.position.x = 0
-pointLight.position.y = 2000
-pointLight.position.z = 0
+pointLight.position.y = 1200
+pointLight.position.z = 500
 pointLight.target = targetObject;
+const directionalLight2 = new THREE.DirectionalLight(0xffffff, 1.5);
+directionalLight2.position.x = 0
+directionalLight2.position.y = 0
+directionalLight2.position.z = 1000
+directionalLight2.castShadow = true;
+const targetObject2 = new THREE.Object3D();
+targetObject2.position.set(0, 5000, 1000);
+scene.add(targetObject2);
+directionalLight2.target = targetObject2;
+
+
+scene.add(directionalLight2);
 scene.add(directionalLight);
 scene.add(ambientLight);
 scene.add(pointLight);
+
 
 //HELPER
 // const helper = new THREE.CameraHelper( directionalLight.shadow.camera );
@@ -160,6 +173,11 @@ document.getElementById("cb_floor2").addEventListener("click", floor2Change);
 document.getElementById("cb_floor3").addEventListener("click", floor3Change);
 document.getElementById("cb_floor4").addEventListener("click", floor4Change);
 document.getElementById("cb_floor5").addEventListener("click", floor5Change);
+document.getElementById("cb_ceiling1").addEventListener("click", ceiling1Change);
+document.getElementById("cb_ceiling2").addEventListener("click", ceiling2Change);
+document.getElementById("cb_ceiling3").addEventListener("click", ceiling3Change);
+document.getElementById("cb_ceiling4").addEventListener("click", ceiling4Change);
+document.getElementById("cb_ceiling5").addEventListener("click", ceiling5Change);
 document.getElementById("cb_assetTexture1").addEventListener("click", assetTexture1Change);
 document.getElementById("cb_assetTexture2").addEventListener("click", assetTexture2Change);
 document.getElementById("cb_assetTexture3").addEventListener("click", assetTexture3Change);
@@ -177,22 +195,25 @@ document.getElementById("buttonResetScene").addEventListener('click', resetScene
 document.getElementById("button5").addEventListener('click', downloadScene);
 document.getElementById("buttonDelete").addEventListener('click', deleteAsset);
 document.getElementById("buttonCenter").addEventListener('click', centerAsset);
+document.getElementById("buttonEdit").addEventListener('click', editFunction);
+document.getElementById("buttonTransformScale").addEventListener('click', transformScale);
+document.getElementById("buttonTransformRotate").addEventListener('click', transformRotate);
+document.getElementById("buttonTransformMove").addEventListener('click', transformMove);
 
 
 //WORK
 
 function loadInitials() {
     console.log("Adding Objects!")
-    loadPlaneX('Resources/wallpaper_default.jpg', "WallFront", "#ddd", 3000, 1500, 1, 1, 0, 750, -750, 0, 0, 0)
-    loadPlaneX('Resources/wallpaper_default.jpg', "WallLeft", "#eee", 3000, 1500, 1, 1, -1500, 750, 750, 0, Math.PI / 2, 0)
-    loadPlaneX('Resources/wallpaper_default.jpg', "WallRight", "#eee", 3000, 1500, 1, 1, 1500, 750, 750, 0, -Math.PI / 2, 0)
-    loadPlaneX('Resources/wallpaper_default.jpg', "WallBack", "#ddd", 3000, 1500, 1, 1, 0, 750, 2250, 0, Math.PI, 0)
+    loadPlaneX('Resources/wallpaper_matte.jpg', "WallFront", "#ddd", 3000, 1500, 1, 1, 0, 750, -750, 0, 0, 0)
+    loadPlaneX('Resources/wallpaper_matte.jpg', "WallLeft", "#eee", 3000, 1500, 1, 1, -1500, 750, 750, 0, Math.PI / 2, 0)
+    loadPlaneX('Resources/wallpaper_matte.jpg', "WallRight", "#eee", 3000, 1500, 1, 1, 1500, 750, 750, 0, -Math.PI / 2, 0)
+    loadPlaneX('Resources/wallpaper_matte.jpg', "WallBack", "#ddd", 3000, 1500, 1, 1, 0, 750, 2250, 0, Math.PI, 0)
     loadPlaneX('Resources/floor3.jpg', "FloorX", "#ccc", 3000, 3000, 1, 1, 0, 0, 750, -Math.PI / 2, 0, 0)
+    loadPlaneX('Resources/ceiling2.jpg', "CeilingX", "#ccc", 3000, 3000, 1, 1, 0, 1500, 750, Math.PI / 2, 0, 0)
 }
 
 loadInitials();
-loadGLTF('Models/sofaX_glTF/untitled.gltf', 0.3, 0, 0, -500, "Sofa")
-loadGLTF('Models/tv_glTF/scene.gltf', 10, 0, 350, -720, "TV")
 
 //MOVEMENT
 var previousPosX = 0;
@@ -272,8 +293,8 @@ function deleteAsset() {
 }
 function deleteIndividualAsset(currentObjectNameX) {
     scene.getObjectByName(currentObjectNameX).scale.set(0, 0, 0)
-    scene.getObjectByName(currentObjectNameX).position.set(Math.random() * 5000 + 5000, Math.random() * 5000 + 5000, Math.random() * 5000 + 5000)
-    console.log(currentObjectNameX.name)
+    scene.getObjectByName(currentObjectNameX).position.set(0, 10000, 0)
+    console.log(currentObjectNameX)
     const currentObjectX = scene.getObjectByName(currentObjectNameX)
     const currentTextureLoader = new THREE.TextureLoader().load('/Resources/floor1.jpg');
     currentObjectX.traverse(function (node) {
@@ -283,7 +304,6 @@ function deleteIndividualAsset(currentObjectNameX) {
     });
     const tempName = makeid();
     scene.getObjectByName(currentObjectNameX).name = tempName;
-    scene.remove(scene.getObjectByName(tempName))
     totalObjects -= 1;
 }
 
@@ -346,6 +366,30 @@ function addAssetFunction() {
     }
 }
 
+function editFunction(){
+    var checkBox = document.getElementById("myTransformer");
+    if (checkBox.checked == false){
+        document.getElementById("myTransformer").checked = true;
+        dragControls.deactivate();
+        transformControl.attach(scene.getObjectByName(currentObjectName));
+        transformActive = true;
+        document.getElementById("myDrag").checked = false;
+        $("#enableinfo").hide()
+        $("#info").show()
+    }
+    else if (checkBox.checked == true) {
+        document.getElementById("myTransformer").checked = false;
+        transformControl.detach(scene.getObjectByName(currentObjectName));
+        transformActive = false;
+        controls.enableRotate = true;
+        dragControls.activate();
+        document.getElementById("myDrag").checked = true;
+        $("#enableinfo").show()
+        $("#info").hide()
+
+    }
+
+}
 
 document.getElementById('myDrag').onclick = function () {
     var checkBox = document.getElementById("myDrag");
@@ -358,24 +402,7 @@ document.getElementById('myDrag').onclick = function () {
 }
 
 document.getElementById('myTransformer').onclick = function () {
-    var checkBox = document.getElementById("myTransformer");
-    if (checkBox.checked == true) {
-        dragControls.deactivate();
-        transformControl.attach(scene.getObjectByName(currentObjectName));
-        transformActive = true;
-        document.getElementById("myDrag").checked = false;
-        $("#enableinfo").hide()
-        $("#info").show()
-    }
-    else if (checkBox.checked == false) {
-        transformControl.detach(scene.getObjectByName(currentObjectName));
-        transformActive = false;
-        controls.enableRotate = true;
-        dragControls.activate();
-        document.getElementById("myDrag").checked = true;
-        $("#enableinfo").show()
-        $("#info").hide()
-    }
+    editFunction()
 }
 
 document.getElementById('lockCamera').onclick = function () {
@@ -411,14 +438,25 @@ document.getElementById('myWire').onclick = function () {
 }
 
 function downloadScene() {
-    alert("Under Development")
-
+    // alert("Under Development")
     // const json = scene.toJSON();
     // const a = document.createElement('a');
     // const type = "Scene"
     // a.href = URL.createObjectURL(new Blob([json], { type: `text/${type === "txt" ? "plain" : type}` }));
     // a.download = name;
     // a.click();
+
+    resetScene()
+    ancientWallpaper()
+    floor5Change()
+    ceiling5Change()
+    loadGLTF('Models/sofaX_glTF/untitled.gltf', 0.3, 0, 0, -500, "Sofa")
+    loadGLTF('Models/tv_glTF/scene.gltf', 10, 0, 350, -720, "TV")
+    loadGLTF('Models/lamp1_glTF/scene.gltf', 280, 700, 0, -600, "Lamp1")
+    loadGLTF('Models/lamp1_glTF/scene.gltf', 280, -700, 0, -600, "Lamp2")
+    loadGLTF('Models/table_glTF/scene.gltf', 15, 0, 0, -120, "Table")
+    loadGLTF('Models/attic_glTF/scene.gltf', 300, -1000, 0, -600, "Attic")
+
 
 }
 
@@ -447,6 +485,10 @@ function loadPlaneX(resourceLocation, nameX, colorX, sizeX, sizeY, widthX, width
         }));
     planeObject.castShadow = true;
     planeObject.receiveShadow = true;
+    if (nameX == "CeilingX") {
+        planeObject.castShadow = false;
+        planeObject.receiveShadow = false;
+    }
     planeObject.name = nameX;
     planeObject.position.set(posX, posY, posZ);
     planeObject.rotation.set(rotX, rotY, rotZ);
@@ -488,34 +530,59 @@ function takeScreenshot() {
 }
 
 function modernWallpaper() {
-    changeTextureX("WallFront", 'Resources/wallpaper_modern.jpg')
-    changeTextureX("WallLeft", 'Resources/wallpaper_modern.jpg')
-    changeTextureX("WallRight", 'Resources/wallpaper_modern.jpg')
-    changeTextureX("WallBack", 'Resources/wallpaper_modern.jpg')
+    var x = document.getElementById("wallOptions").value;
+    if (x == "AllWalls") {
+        changeTextureX("WallFront", 'Resources/wallpaper_modern.jpg')
+        changeTextureX("WallLeft", 'Resources/wallpaper_modern.jpg')
+        changeTextureX("WallRight", 'Resources/wallpaper_modern.jpg')
+        changeTextureX("WallBack", 'Resources/wallpaper_modern.jpg')
+    } else {
+        changeTextureX(x, 'Resources/wallpaper_modern.jpg')
+    }
 }
 function wrapWallpaper() {
-    changeTextureX("WallFront", 'Resources/wallpaper_wrap.jpg')
-    changeTextureX("WallLeft", 'Resources/wallpaper_wrap.jpg')
-    changeTextureX("WallRight", 'Resources/wallpaper_wrap.jpg')
-    changeTextureX("WallBack", 'Resources/wallpaper_wrap.jpg')
+    var x = document.getElementById("wallOptions").value;
+    if (x == "AllWalls") {
+        changeTextureX("WallFront", 'Resources/wallpaper_wrap.jpg')
+        changeTextureX("WallLeft", 'Resources/wallpaper_wrap.jpg')
+        changeTextureX("WallRight", 'Resources/wallpaper_wrap.jpg')
+        changeTextureX("WallBack", 'Resources/wallpaper_wrap.jpg')
+    } else {
+        changeTextureX(x, 'Resources/wallpaper_wrap.jpg')
+    }
 }
 function defaultWallpaper() {
-    changeTextureX("WallFront", 'Resources/wallpaper_default.jpg')
-    changeTextureX("WallLeft", 'Resources/wallpaper_default.jpg')
-    changeTextureX("WallRight", 'Resources/wallpaper_default.jpg')
-    changeTextureX("WallBack", 'Resources/wallpaper_default.jpg')
+    var x = document.getElementById("wallOptions").value;
+    if (x == "AllWalls") {
+        changeTextureX("WallFront", 'Resources/wallpaper_default.jpg')
+        changeTextureX("WallLeft", 'Resources/wallpaper_default.jpg')
+        changeTextureX("WallRight", 'Resources/wallpaper_default.jpg')
+        changeTextureX("WallBack", 'Resources/wallpaper_default.jpg')
+    } else {
+        changeTextureX(x, 'Resources/wallpaper_default.jpg')
+    }
 }
 function matteWallpaper() {
-    changeTextureX("WallFront", 'Resources/wallpaper_matte.jpg')
-    changeTextureX("WallLeft", 'Resources/wallpaper_matte.jpg')
-    changeTextureX("WallRight", 'Resources/wallpaper_matte.jpg')
-    changeTextureX("WallBack", 'Resources/wallpaper_matte.jpg')
+    var x = document.getElementById("wallOptions").value;
+    if (x == "AllWalls") {
+        changeTextureX("WallFront", 'Resources/wallpaper_matte.jpg')
+        changeTextureX("WallLeft", 'Resources/wallpaper_matte.jpg')
+        changeTextureX("WallRight", 'Resources/wallpaper_matte.jpg')
+        changeTextureX("WallBack", 'Resources/wallpaper_matte.jpg')
+    } else {
+        changeTextureX(x, 'Resources/wallpaper_matte.jpg')
+    }
 }
 function ancientWallpaper() {
-    changeTextureX("WallFront", 'Resources/wallpaper_ancient.jpg')
-    changeTextureX("WallLeft", 'Resources/wallpaper_ancient.jpg')
-    changeTextureX("WallRight", 'Resources/wallpaper_ancient.jpg')
-    changeTextureX("WallBack", 'Resources/wallpaper_ancient.jpg')
+    var x = document.getElementById("wallOptions").value;
+    if (x == "AllWalls") {
+        changeTextureX("WallFront", 'Resources/wallpaper_ancient.jpg')
+        changeTextureX("WallLeft", 'Resources/wallpaper_ancient.jpg')
+        changeTextureX("WallRight", 'Resources/wallpaper_ancient.jpg')
+        changeTextureX("WallBack", 'Resources/wallpaper_ancient.jpg')
+    } else {
+        changeTextureX(x, 'Resources/wallpaper_ancient.jpg')
+    }
 }
 function floor1Change() {
     changeTextureX("FloorX", 'Resources/floor1.jpg')
@@ -536,6 +603,24 @@ function floor5Change() {
     changeTextureX("FloorX", 'Resources/floor5.jpg')
 }
 
+function ceiling1Change() {
+    changeTextureX("CeilingX", 'Resources/ceiling1.jpg')
+}
+function ceiling2Change() {
+    changeTextureX("CeilingX", 'Resources/ceiling2.jpg')
+}
+
+function ceiling3Change() {
+    changeTextureX("CeilingX", 'Resources/ceiling3.jpg')
+}
+
+function ceiling4Change() {
+    changeTextureX("CeilingX", 'Resources/ceiling4.jpg')
+}
+
+function ceiling5Change() {
+    changeTextureX("CeilingX", 'Resources/ceiling5.jpg')
+}
 function assetTexture1Change() {
     changeTextureX(currentObjectName, '/Resources/assetTexture1.jpg')
 }
@@ -624,7 +709,15 @@ function onMouseMove(event) {
         // console.log('ITEM IS ' + intersects[0].object.name)
     }
 }
-
+function transformMove(){
+    transformControl.setMode('translate');
+}
+function transformScale(){
+    transformControl.setMode('scale');
+}
+function transformRotate(){
+    transformControl.setMode('rotate');
+}
 window.addEventListener('keydown', function (event) {
 
     switch (event.keyCode) {

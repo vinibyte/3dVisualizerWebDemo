@@ -39,93 +39,14 @@
                   data-toggle="tab">&emsp;RENDER&emsp;</a></li>
             </ul>
             <div class="tab-content">
-              <div class="tab-pane active" id="tab1" style="padding-left: 25px; background: #fff">
+              <div class="tab-pane active" id="tab1" style="padding-left: 20px; background: #fff">
                 <br>
-                <h4 id="assetName" style=" font-size: 24px;">Current Asset: Sofa</h4>
+                <h4 id="assetName" style=" font-size: 24px;">Current Asset: None</h4>
                 <button style="cursor: pointer; font-size: 32px;" id="scaleButtonDown">-</button> Scale <button
                   style="cursor: pointer; font-size: 32px; margin-right: 10px;" id="scaleButtonUp">+</button>
                 <button><input type="range" id="assetRotate" min="-360" max="360" value="0"
                     style="width: 200px; margin: 15px"></button>
                 <br>
-                <button id="buttonCenter" style="margin-right: 10px;">Center</button>
-                <button id="buttonDelete" style="margin-left: 10px;">Delete</button>
-                <br>
-                <h4 style=" font-size: 24px;">Other Options:</h4>
-                 Draggable Object:&emsp;<input type="checkbox" id="myDrag" checked=true><br>
-                 Lock Camera:&emsp;&emsp;&emsp;<input type="checkbox" id="lockCamera"><br>
-                 Lock X Drag :&emsp;&emsp;&emsp;<input type="checkbox" id="lockDragX"><br>
-                 Lock Y Drag :&emsp;&emsp;&emsp;<input type="checkbox" id="lockDragY"><br>
-                 Lock Z Drag :&emsp;&emsp;&emsp;<input type="checkbox" id="lockDragZ"><br>
-                 Show Wireframe: &emsp;<input type="checkbox" id="myWire"><br>
-                 Show Transform: &emsp;<input type="checkbox" id="myTransformer">
-                <br>
-                <br>
-                <div id="enableinfo">Select Show transform for Advanced Controls.</div>
-                <div id="info" style="font-size: large; display: none;">
-                  "W" translate | "E" scale | "R" rotate | "+/-" adjust size | <br>
-                  "Q" toggle world/local space | "Shift" snap | "C" toggle camera<br>
-                  "X" toggle X | "Y" toggle Y | "Z" toggle Z | "V" random zoom <br>
-                </div>
-              </div>
-              <div class="tab-pane" id="tab2">
-                <br>
-                <h4 style="margin-left: 10px; font-size: 32px;">Asset Management:</h4>
-                <h3 id="assetCount" style="margin-left: 10px;">Total Assets: 0</h3>
-                <h3>. Add a new Asset:</h3>
-                <div style="display: flex">
-                  <input list="chooseAssets" id="myAsset" name="myAsset" placeholder="Type here..."
-                    style="margin: 10px; font-size: 24px; width:300px; background: #fff;" />
-                  <datalist id="chooseAssets"></datalist>
-                  <button id="buttonAddAsset"
-                    style="margin: 10px; padding: 0px; border-radius: 10px;">&emsp;Add&emsp;</button>
-                </div>
-                <div class="buttons">
-                </div>
-                <button id="buttonDeleteAll" style="margin-left: 150px;">Delete All Assets</button>
-                <hr style="height:2px;border-width:0;color:gray;background-color:gray">
-                <br>
-              </div>
-              <div class="tab-pane" id="tab3">
-                <h3>. Choose Wallpaper:</h3>
-                <form>
-                  <ul>
-                    <li><input type="radio" name="wallpaper" id="cb_modern" />
-                      <label for="cb_modern"><img src="Resources/wallpaper_modern.jpg" /></label>
-                    </li>
-                    <li><input type="radio" name="wallpaper" id="cb_wrap" />
-                      <label for="cb_wrap"><img src="Resources/wallpaper_wrap.jpg" /></label>
-                    </li>
-                    <li><input type="radio" name="wallpaper" checked="default" id="cb_default" />
-                      <label for="cb_default"><img src="Resources/wallpaper_default.jpg" /></label>
-                    </li>
-                    <li><input type="radio" name="wallpaper" id="cb_matte" />
-                      <label for="cb_matte"><img src="Resources/wallpaper_matte.jpg" /></label>
-                    </li>
-                    <li><input type="radio" name="wallpaper" id="cb_ancient" />
-                      <label for="cb_ancient"><img src="Resources/wallpaper_ancient.jpg" /></label>
-                    </li>
-                  </ul>
-                </form>
-                <h3>. Choose Floor:</h3>
-                <form>
-                  <ul>
-                    <li><input type="radio" name="floorselect" id="cb_floor1" />
-                      <label for="cb_floor1"><img src="Resources/floor1.jpg" /></label>
-                    </li>
-                    <li><input type="radio" name="floorselect" id="cb_floor2" />
-                      <label for="cb_floor2"><img src="Resources/floor2.jpg" /></label>
-                    </li>
-                    <li><input type="radio" name="floorselect" id="cb_floor3" checked="default" />
-                      <label for="cb_floor3"><img src="Resources/floor3.jpg" /></label>
-                    </li>
-                    <li><input type="radio" name="floorselect" id="cb_floor4" />
-                      <label for="cb_floor4"><img src="Resources/floor4.jpg" /></label>
-                    </li>
-                    <li><input type="radio" name="floorselect" id="cb_floor5" />
-                      <label for="cb_floor5"><img src="Resources/floor5.jpg" /></label>
-                    </li>
-                  </ul>
-                </form>
                 <h3>. Choose Asset Texture:</h3>
                 <form>
                   <ul>
@@ -163,9 +84,124 @@
                     </li>
                   </ul>
                 </form>
+                <button id="buttonEdit" style="margin-left: 10px;">Edit</button>
+                <button id="buttonCenter" style="margin-right: 10px;">Center</button>
+                <button id="buttonDelete" style="margin-left: 10px;">Delete</button>
+                <div id="enableinfo">
+                  <h4 style=" font-size: 24px;">Click Edit for Advanced Controls. </h4>
+                  Lock Camera:&emsp;&emsp;&emsp;<input type="checkbox" id="lockCamera"><br>
+                  Lock X Drag :&emsp;&emsp;&emsp;<input type="checkbox" id="lockDragX"><br>
+                  Lock Y Drag :&emsp;&emsp;&emsp;<input type="checkbox" id="lockDragY"><br>
+                  Lock Z Drag :&emsp;&emsp;&emsp;<input type="checkbox" id="lockDragZ"><br>
+                </div>
+                <div id="info" style="font-size: large; display: none;">
+                  <h4 style=" font-size: 24px;">Click Edit for Basic Controls. </h4>
+                  "W" translate | "E" scale | "R" rotate | "+/-" adjust size | <br>
+                  "Q" toggle world/local space | "Shift" snap | "C" toggle camera<br>
+                  "X" toggle X | "Y" toggle Y | "Z" toggle Z | "V" random zoom <br>
+                  <button id="buttonTransformScale" style="margin-right: 10px;">Scale</button>
+                  <button id="buttonTransformRotate" style="margin-left: 10px;">Rotate</button>
+                  <button id="buttonTransformMove" style="margin-left: 10px;">Move</button>
+                  <br>
+                  <div style="display: none;">
+                    Draggable Object: <input type="checkbox" id="myDrag" checked=true>
+                    . Show Wireframe: <input type="checkbox" id="myWire" >
+                    . Show Transform: <input type="checkbox" id="myTransformer">
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane" id="tab2" style="padding-left: 20px; background: #fff">
+                <br>
+                <h4 style="margin-left: 10px; font-size: 32px;">Asset Management:</h4>
+                <h3 id="assetCount" style="margin-left: 10px;">Total Assets: 0</h3>
+                <h3>. Add a new Asset:</h3>
+                <div style="display: flex">
+                  <input list="chooseAssets" id="myAsset" name="myAsset" placeholder="Type here..."
+                    style="margin: 10px; font-size: 24px; width:300px; background: #fff;" />
+                  <datalist id="chooseAssets"></datalist>
+                  <button id="buttonAddAsset"
+                    style="margin: 10px; padding: 0px; border-radius: 10px;">&emsp;Add&emsp;</button>
+                </div>
+                <div class="buttons">
+                </div>
+                <button id="buttonDeleteAll" style="margin-left: 150px;">Delete All Assets</button>
+                <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+              </div>
+              <div class="tab-pane" id="tab3" style="padding-left: 20px; background: #fff">
+                <h3>. Choose Floor:</h3>
+                <form>
+                  <ul>
+                    <li><input type="radio" name="floorselect" id="cb_floor1" />
+                      <label for="cb_floor1"><img src="Resources/floor1.jpg" /></label>
+                    </li>
+                    <li><input type="radio" name="floorselect" id="cb_floor2" />
+                      <label for="cb_floor2"><img src="Resources/floor2.jpg" /></label>
+                    </li>
+                    <li><input type="radio" name="floorselect" id="cb_floor3" checked="default" />
+                      <label for="cb_floor3"><img src="Resources/floor3.jpg" /></label>
+                    </li>
+                    <li><input type="radio" name="floorselect" id="cb_floor4" />
+                      <label for="cb_floor4"><img src="Resources/floor4.jpg" /></label>
+                    </li>
+                    <li><input type="radio" name="floorselect" id="cb_floor5" />
+                      <label for="cb_floor5"><img src="Resources/floor5.jpg" /></label>
+                    </li>
+                  </ul>
+                </form>
+                <h3>. Choose Ceiling:</h3>
+                <form>
+                  <ul>
+                    <li><input type="radio" name="ceilingselect" id="cb_ceiling1" />
+                      <label for="cb_ceiling1"><img src="Resources/ceiling1.jpg" /></label>
+                    </li>
+                    <li><input type="radio" name="ceilingselect" id="cb_ceiling2" checked="default" />
+                      <label for="cb_ceiling2"><img src="Resources/ceiling2.jpg" /></label>
+                    </li>
+                    <li><input type="radio" name="ceilingselect" id="cb_ceiling3" />
+                      <label for="cb_ceiling3"><img src="Resources/ceiling3.jpg" /></label>
+                    </li>
+                    <li><input type="radio" name="ceilingselect" id="cb_ceiling4" />
+                      <label for="cb_ceiling4"><img src="Resources/ceiling4.jpg" /></label>
+                    </li>
+                    <li><input type="radio" name="ceilingselect" id="cb_ceiling5" />
+                      <label for="cb_ceiling5"><img src="Resources/ceiling5.jpg" /></label>
+                    </li>
+                  </ul>
+                </form>
+                <div style="display: flex;">
+                  <h3>. Choose Wallpaper: &emsp;</h3>
+                  <select name="wallOptions" id="wallOptions" style="height: 35px; margin-top: 15px;">
+                    <option value="AllWalls">All Walls</option>
+                    <option value="WallLeft">Left Wall</option>
+                    <option value="WallRight">Right Wall</option>
+                    <option value="WallFront">Front Wall</option>
+                    <option value="WallBack">Back Wall</option>
+                  </select>
+
+                </div>
+                <form>
+                  <ul>
+                    <li><input type="radio" name="wallpaper" id="cb_modern" />
+                      <label for="cb_modern"><img src="Resources/wallpaper_modern.jpg" /></label>
+                    </li>
+                    <li><input type="radio" name="wallpaper" id="cb_wrap" />
+                      <label for="cb_wrap"><img src="Resources/wallpaper_wrap.jpg" /></label>
+                    </li>
+                    <li><input type="radio" name="wallpaper" id="cb_default" />
+                      <label for="cb_default"><img src="Resources/wallpaper_default.jpg" /></label>
+                    </li>
+                    <li><input type="radio" name="wallpaper" id="cb_matte"  checked="default"/>
+                      <label for="cb_matte"><img src="Resources/wallpaper_matte.jpg" /></label>
+                    </li>
+                    <li><input type="radio" name="wallpaper" id="cb_ancient" />
+                      <label for="cb_ancient"><img src="Resources/wallpaper_ancient.jpg" /></label>
+                    </li>
+                  </ul>
+                </form>
+                
                 <div class="buttons">
                   <button id="shot">Screenshot</button>
-                  <button id="button5">Download</button>
+                  <button id="button5">Sample</button>
                   <button id="buttonResetScene">Reset Scene</button>
                 </div>
               </div>
